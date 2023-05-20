@@ -85,7 +85,7 @@ MonoBehaviour:
   countersLayerMask:
     serializedVersion: 2
     m_Bits: 64
-  KitchenObjectHoldPoint: {fileID: 8133412282816626415}
+  kitchenObjectHoldPoint: {fileID: 8133412282816626415}
 --- !u!114 &8133412282959696923
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,24 +1,28 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Netcode;
 using UnityEngine;
 
-public class BaseCounter : MonoBehaviour, IKitchenObjectParent
+public class BaseCounter : NetworkBehaviour, IKitchenObjectParent
 {
-    public static event EventHandler OnAnyObjectPlacedHere;
 
+
+    public static event EventHandler OnAnyObjectPlacedHere;
 
     public static void ResetStaticData()
     {
-        OnAnyObjectPlacedHere= null;
+        OnAnyObjectPlacedHere = null;
     }
+
 
     [SerializeField] private Transform counterTopPoint;
 
 
     private KitchenObject kitchenObject;
 
-    public virtual void Interact(Player player) 
+
+    public virtual void Interact(Player player)
     {
         Debug.LogError("BaseCounter.Interact();");
     }
@@ -28,23 +32,26 @@ public class BaseCounter : MonoBehaviour, IKitchenObjectParent
         //Debug.LogError("BaseCounter.InteractAlternate();");
     }
 
-    public Transform GetKitchenObjectFollowTranfsorm()
+
+    public Transform GetKitchenObjectFollowTransform()
     {
         return counterTopPoint;
     }
-
 
     public void SetKitchenObject(KitchenObject kitchenObject)
     {
         this.kitchenObject = kitchenObject;
 
-        if(kitchenObject != null)
+        if (kitchenObject != null)
         {
             OnAnyObjectPlacedHere?.Invoke(this, EventArgs.Empty);
         }
     }
 
-    public KitchenObject GetKitchenObject() { return kitchenObject; }
+    public KitchenObject GetKitchenObject()
+    {
+        return kitchenObject;
+    }
 
     public void ClearKitchenObject()
     {
@@ -55,4 +62,10 @@ public class BaseCounter : MonoBehaviour, IKitchenObjectParent
     {
         return kitchenObject != null;
     }
+
+    public NetworkObject GetNetworkObject()
+    {
+        return NetworkObject;
+    }
+
 }

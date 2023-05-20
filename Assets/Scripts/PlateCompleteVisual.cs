@@ -5,34 +5,41 @@ using UnityEngine;
 
 public class PlateCompleteVisual : MonoBehaviour
 {
+
+
     [Serializable]
     public struct KitchenObjectSO_GameObject
     {
+
         public KitchenObjectSO kitchenObjectSO;
         public GameObject gameObject;
+
     }
+
 
     [SerializeField] private PlateKitchenObject plateKitchenObject;
     [SerializeField] private List<KitchenObjectSO_GameObject> kitchenObjectSOGameObjectList;
+
+
     private void Start()
     {
         plateKitchenObject.OnIngredientAdded += PlateKitchenObject_OnIngredientAdded;
 
-        foreach (KitchenObjectSO_GameObject kitchenObjectSOGameOBject in kitchenObjectSOGameObjectList)
+        foreach (KitchenObjectSO_GameObject kitchenObjectSOGameObject in kitchenObjectSOGameObjectList)
         {
-            kitchenObjectSOGameOBject.gameObject.SetActive(false);
+            kitchenObjectSOGameObject.gameObject.SetActive(false);
         }
     }
 
     private void PlateKitchenObject_OnIngredientAdded(object sender, PlateKitchenObject.OnIngredientAddedEventArgs e)
     {
-        foreach(KitchenObjectSO_GameObject kitchenObjectSOGameOBject in kitchenObjectSOGameObjectList)
+        foreach (KitchenObjectSO_GameObject kitchenObjectSOGameObject in kitchenObjectSOGameObjectList)
         {
-            if(kitchenObjectSOGameOBject.kitchenObjectSO == e.KitchenObjectSO)
+            if (kitchenObjectSOGameObject.kitchenObjectSO == e.kitchenObjectSO)
             {
-                kitchenObjectSOGameOBject.gameObject.SetActive(true);
+                kitchenObjectSOGameObject.gameObject.SetActive(true);
             }
         }
-        //e.KitchenObjectSO
     }
+
 }
