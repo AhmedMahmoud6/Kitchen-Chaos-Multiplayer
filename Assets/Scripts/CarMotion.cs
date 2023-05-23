@@ -1,10 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Unity.Netcode;
 using UnityEngine;
+
+
 
 public class CarMotion : MonoBehaviour
 {
-    public static CarMotion Instance { get; private set; }
     
     [SerializeField] private float speed = 10.0f;
     [SerializeField] private float stopPosition = -6f;
@@ -16,9 +19,9 @@ public class CarMotion : MonoBehaviour
     private GameObject spawnedObject; // reference to the instantiated object
     private void Start()
     {
-        Instance = this;
         DeliveryManager.Instance.OnRecipeSuccess += DeliveryManager_OnRecipeSuccess;
         int randomIndex = Random.Range(0, objectsToSpawn.Length); // generate a random index
+
         spawnedObject = Instantiate(objectsToSpawn[randomIndex], spawnPosition, Quaternion.identity); // initialize the spawnedObject variable
         speed = Random.Range(10, 21);
     }
@@ -45,8 +48,10 @@ public class CarMotion : MonoBehaviour
                 {
                     deliverySuccess = false;
                     int randomIndex = Random.Range(0, objectsToSpawn.Length); // generate a random index
+
                     Destroy(spawnedObject.gameObject);
                     spawnedObject = Instantiate(objectsToSpawn[randomIndex], spawnPosition, Quaternion.identity);
+
                     speed = Random.Range(10, 21);
                 }
                 spawnedObject.transform.Translate(Vector3.forward * speed * Time.deltaTime); // move the prefab forward
@@ -54,6 +59,7 @@ public class CarMotion : MonoBehaviour
         }
 
     }
+
 
 
 }
