@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -8,19 +9,17 @@ using UnityEngine.UI;
 public class GameOverUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI recipesDeliveredText;
-    [SerializeField] private Button restartButton;
-    [SerializeField] private Button mainMenuButton;
+    [SerializeField] private Button playAgain;
+
 
     private void Awake()
     {
-        restartButton.onClick.AddListener(() =>
+        playAgain.onClick.AddListener(() =>
         {
-            Loader.Load(Loader.Scene.GameScene);
-        });
-        mainMenuButton.onClick.AddListener(() =>
-        {
+            NetworkManager.Singleton.Shutdown();
             Loader.Load(Loader.Scene.MainMenuScene);
         });
+
 
     }
 
