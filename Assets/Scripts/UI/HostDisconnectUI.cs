@@ -6,7 +6,17 @@ using UnityEngine.UI;
 
 public class HostDisconnectUI : MonoBehaviour
 {
+
+
     [SerializeField] private Button playAgainButton;
+
+
+    private void Awake()
+    {
+        playAgainButton.onClick.AddListener(() => {
+            Loader.Load(Loader.Scene.MainMenuScene);
+        });
+    }
 
     private void Start()
     {
@@ -15,18 +25,9 @@ public class HostDisconnectUI : MonoBehaviour
         Hide();
     }
 
-    private void Awake()
-    {
-        playAgainButton.onClick.AddListener(() =>
-        {
-            Loader.Load(Loader.Scene.MainMenuScene);
-        });
-
-    }
-
     private void NetworkManager_OnClientDisconnectCallback(ulong clientId)
     {
-        if(clientId == NetworkManager.ServerClientId)
+        if (clientId == NetworkManager.ServerClientId)
         {
             // Server is shutting down
             Show();
@@ -42,5 +43,5 @@ public class HostDisconnectUI : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+
 }
- 
