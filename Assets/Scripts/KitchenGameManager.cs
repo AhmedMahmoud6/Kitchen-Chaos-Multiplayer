@@ -18,7 +18,7 @@ public class KitchenGameManager : NetworkBehaviour
     public event EventHandler OnLocalPlayerReadyChanged;
 
     [SerializeField] private GameInput gameInput;
-
+    [SerializeField] private Transform playerPrefab;
 
     private enum State
     {
@@ -62,6 +62,16 @@ public class KitchenGameManager : NetworkBehaviour
         if(IsServer)
         {
             NetworkManager.Singleton.OnClientDisconnectCallback += NetworkManager_OnClientDisconnectCallback;
+            NetworkManager.Singleton.SceneManager.OnLoadEventCompleted += SceneManager_OnLoadEventCompleted;
+        }
+    }
+
+    private void SceneManager_OnLoadEventCompleted(string sceneName, UnityEngine.SceneManagement.LoadSceneMode loadSceneMode, List<ulong> clientsCompleted, List<ulong> clientsTimedOut)
+    {
+        foreach(ulong clientId in NetworkManager.Singleton.ConnectedClientsIds)
+        {
+            Transform playerTransform = Instantiate(playerPrefab);
+            playerTransform.GetComponent<NetworkObject>().SpawnAsPlayerObject(clientId, true);
         }
     }
 
@@ -191,6 +201,11 @@ public class KitchenGameManager : NetworkBehaviour
     public bool IsGameOver()
     {
         return state.Value == State.GameOver;
+    }
+
+    public bool IsWaitingToStart()
+    {
+        return state.Value == State.WaitingToStart;
     }
 
     public bool IsLocalPlayerReady()
