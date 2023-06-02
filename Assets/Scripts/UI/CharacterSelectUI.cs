@@ -8,6 +8,8 @@ using UnityEngine.UI;
 
 public class CharacterSelectUI : MonoBehaviour
 {
+
+
     [SerializeField] private Button mainMenuButton;
     [SerializeField] private Button readyButton;
     [SerializeField] private TextMeshProUGUI lobbyNameText;
@@ -16,20 +18,19 @@ public class CharacterSelectUI : MonoBehaviour
 
     private void Awake()
     {
-        mainMenuButton.onClick.AddListener(() =>
-        {
+        mainMenuButton.onClick.AddListener(() => {
+            KitchenGameLobby.Instance.LeaveLobby();
             NetworkManager.Singleton.Shutdown();
             Loader.Load(Loader.Scene.MainMenuScene);
         });
-        readyButton.onClick.AddListener(() =>
-        {
+        readyButton.onClick.AddListener(() => {
             CharacterSelectReady.Instance.SetPlayerReady();
         });
     }
 
     private void Start()
     {
-        Lobby lobby =  KitchenGameLobby.Instance.GetLobby();
+        Lobby lobby = KitchenGameLobby.Instance.GetLobby();
 
         lobbyNameText.text = "Lobby Name: " + lobby.Name;
         lobbyCodeText.text = "Lobby Code: " + lobby.LobbyCode;
