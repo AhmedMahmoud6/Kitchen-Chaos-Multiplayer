@@ -178,7 +178,6 @@ public class KitchenGameManager : NetworkBehaviour
             case State.GameOver:
                 break;
         }
-        Debug.Log(state);
     }
 
     public bool IsGamePlaying()
